@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Status of your API """
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from os import getenv
 from models import storage
 
@@ -13,6 +13,11 @@ app.register_blueprint(app_views)
 def teardown(close):
     """Close storage"""
     storage.close()
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return make_response(jsonify({"error": "Not Found"}), 404)
 
 
 if __name__ == '__main__':
