@@ -79,7 +79,7 @@ class DBStorage:
         """Returns an object matching class and id"""
         if cls not in classes.values():
             return None
-        obj = self.__session.query(cls).filter_by(id=id).one()
+        obj = self.__session.query(cls).filter(cls.id == id).one()
         return obj
     
     def count(self, cls=None):
