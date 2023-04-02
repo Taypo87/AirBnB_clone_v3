@@ -80,10 +80,7 @@ class DBStorage:
         if cls not in classes.values():
             return None
         obj = self.__session.query(cls).filter_by(id=id).one()
-        if obj is not None:
-            return obj
-        else:
-            return None
+        return obj
     
     def count(self, cls=None):
         """Counts number of objects"""
