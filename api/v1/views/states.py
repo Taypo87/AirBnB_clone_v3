@@ -18,10 +18,10 @@ def get_states(state_id=None):
         if state_id is None:
             return jsonify([state.to_dict() for state in states.values()])
 
-        selected = storage.get('State', state_id)
+        selected = storage.get(State, state_id)
         if selected is None:
             abort(404)
-        return jsonify(selected.to_dict)
+        return jsonify(selected.to_dict())
 
     elif request.method == 'POST':
         state_data = request.get_json()
@@ -34,7 +34,7 @@ def get_states(state_id=None):
         return make_response(jsonify(state_add.to_dict()), 201)
 
     elif request.method == 'DELETE':
-        statedelete = storage.get('State', state_id)
+        statedelete = storage.get(State, state_id)
         if statedelete is None:
             abort(404)
         storage.delete(statedelete)
@@ -42,7 +42,7 @@ def get_states(state_id=None):
         return make_response(jsonify({}), 200)
 
     elif request.method == 'PUT':
-        state_update = storage.get('State', state_id)
+        state_update = storage.get(State, state_id)
         if state_update is None:
             abort(404)
         if request.is_json:
@@ -53,5 +53,5 @@ def get_states(state_id=None):
         for key, val in state_data.items():
             if key != 'id' and key != 'created_at' and key != 'updated_at':
                 setattr(state_update, key, val)
-        storage.save
+        storage.save()
         return make_response(jsonify(state_update.to_dict()), 200)
