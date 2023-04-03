@@ -29,7 +29,7 @@ def get_states(state_id=None):
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
         if 'name' not in state_data:
             return make_response(jsonify({'error': 'Missing name'}), 400)
-        state_add = State(state_data)
+        state_add = State(**state_data)
         storage.save()
         return make_response(jsonify(state_add.to_dict()), 201)
 
