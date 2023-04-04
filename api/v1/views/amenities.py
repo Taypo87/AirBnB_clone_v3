@@ -4,7 +4,7 @@
 from api.v1.views import app_views
 from flask import jsonify, request, abort, Flask, make_response
 from models import storage
-from models.amenities import Amenities
+from models.amenities import Amenity
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
