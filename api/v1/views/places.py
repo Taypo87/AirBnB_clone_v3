@@ -58,6 +58,8 @@ def place_post(city_id=None):
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if 'user_id' not in place_data.keys():
         return make_response(jsonify({'error': 'Missing user_id'}), 400)
+    if storage.get(User, place_data['user_id']) is None:
+        abort(404)
     if 'name' not in place_data.keys():
         return make_response(jsonify({'error': 'Missing name'}), 400)
     new_place = Place(**place_data)
