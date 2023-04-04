@@ -16,7 +16,7 @@ def get_places(city_id=None):
     if request.method == 'GET':
         if city is None:
             abort(404)
-        return jsonify([place.to_dict() for places in city])
+        return jsonify([places.to_dict() for places in city])
 
 
 @app_views.route('/places/<place_id>', methods=['GET', 'DELETE', 'PUT'],
