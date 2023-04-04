@@ -13,7 +13,7 @@ from models.user import User
     'GET'], strict_slashes=False)
 def get_reviews(place_id=None):
     """retrieves all reviews associated with place id"""
-    place = storage.get(place, place_id)
+    place = storage.get(Place, place_id)
     if request.method == 'GET':
         if place is None:
             abort(404)
@@ -51,7 +51,7 @@ def review_get_or_delete(review_id=None):
 def review_post(place_id=None):
     """creates a review"""
     review_data = request.get_json()
-    place = storage.get(place, place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     if not review_data:
