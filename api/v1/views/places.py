@@ -48,13 +48,10 @@ def place_get_or_delete(place_id=None):
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
-def place_post(city_id=None, user_id=None):
+def place_post(city_id=None):
     """creates a place"""
     place_data = request.get_json()
     city = storage.get(City, city_id)
-    users = storage.get(User, user_id)
-    if users is None:
-        abort(404)
     if city is None:
         abort(404)
     if not place_data:
