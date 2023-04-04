@@ -12,11 +12,11 @@ from models.state import City
     'GET'], strict_slashes=False)
 def get_states_cities(state_id=None, city_id=None):
     """retrieves all cities, by id"""
-    state = storage.all(State, state_id)
+    state = storage.get(State, state_id)
     if request.method == 'GET':
         if state is None:
             abort(404)
-        return jsonify([city.to_dict() for city in state.cities()])
+        return jsonify([city.to_dict() for city in state.cities])
 
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
