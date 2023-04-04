@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""View for user objects; handles defualt RESTFul API actions"""
+"""View for user objects, handles default RESTFul API actions"""
 
 from api.v1.views import app_views
 from flask import jsonify, request, abort, Flask, make_response
@@ -11,7 +11,7 @@ from models.user import User
 @app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def get_users(user_id=None):
-    """retrieves all users, by id"""
+    """Retrieves all users, by id"""
     users = storage.all(User)
 
     if request.method == 'GET':
