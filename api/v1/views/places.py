@@ -2,7 +2,7 @@
 """View for place objects; handles defualt RESTFul API actions"""
 
 from api.v1.views import app_views
-from flask import jsonify, request, abort, Flask, make_response
+from flask import jsonify, request, abort, make_response
 from models import storage
 from models.place import Place
 from models.city import City
@@ -16,7 +16,7 @@ def get_places(city_id=None):
     if request.method == 'GET':
         if city is None:
             abort(404)
-        return jsonify([places.to_dict() for places in city])
+        return jsonify([places.to_dict() for places in city.places])
 
 
 @app_views.route('/places/<place_id>', methods=['GET', 'DELETE', 'PUT'],
@@ -37,7 +37,7 @@ def place_get_or_delete(place_id=None):
             place_data = request.get_json()
         else:
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
-        ignore_list = ['id', 'created_at', 'updated_at', 'state_id']
+        ignore_list = ['id', 'created_at', 'updated_at', 'city_id']
         for key, val in place_data.items():
             if key not in ignore_list:
                 setattr(place, key, val)
@@ -55,6 +55,8 @@ def place_post(city_id=None):
         abort(404)
     if not place_data:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if 'user_id' not in place_data.keys():
+        return make_response(jsonify({'error': 'Missing user_id'}), 400)
     if 'name' not in place_data.keys():
         return make_response(jsonify({'error': 'Missing name'}), 400)
     new_place = Place(**place_data)
