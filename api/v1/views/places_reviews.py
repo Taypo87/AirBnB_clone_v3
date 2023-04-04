@@ -60,7 +60,7 @@ def review_post(place_id=None):
         return make_response(jsonify({'error': 'Missing user_id'}), 400)
     if storage.get(User, review_data['user_id']) is None:
         abort(404)
-    if 'name' not in review_data.keys():
+    if 'text' not in review_data.keys():
         return make_response(jsonify({'error': 'Missing text'}), 400)
     new_review = Review(**review_data)
     storage.save()
